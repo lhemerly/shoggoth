@@ -22,10 +22,15 @@ class Shoggoth {
     if (message.tool === "Send_Message") {
       return message;
     }
+    this.answerHook(mask, convo, message, model);
     message = this.parseMessage(message);
     convo.history.push(message);
     convo.adjustConvo(model.tokenizer);
     this.sendConvo(mask, convo, model);
+  }
+
+  answerHook(mask, convo, message, model) {
+    console.log(mask + convo + message + model);
   }
 }
 

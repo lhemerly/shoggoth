@@ -4,13 +4,16 @@
   "description": "A package to manage AI powered backends with a multitude of agents, tools and models",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js",
+    "prettier": "prettier --write ."
   },
   "keywords": [
     "AI",
     "agent",
     "LLM"
   ],
+  "github": "https://github.com/lhemerly/shoggoth.git",
   "author": "Luiz Hemerly",
   "license": "ISC",
   "dependencies": {
