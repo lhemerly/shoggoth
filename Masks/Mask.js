@@ -1,25 +1,45 @@
 class Mask {
-  temperature = 0;
+  
+  // Constructor
+  constructor(
+    temperature = this.#temperature,
+    role = this.#role,
+    goal = this.#goal,
+    additional_information = this.#additional_information,
+    base_tools = this.#base_tools,
+    system_prompt = this.#system_prompt,
+    examples_prompt = this.#examples_prompt
+  ) {
+    this.#temperature = temperature;
+    this.#role = role;
+    this.#goal = goal;
+    this.#additional_information = additional_information;
+    this.#base_tools = base_tools;
+    this.#system_prompt = system_prompt;
+    this.#examples_prompt = examples_prompt;
+  }
 
-  role = "You are a helpful AI assistant.";
+  #temperature = 0;
 
-  goal = "help the user.";
+  #role = "You are a helpful AI assistant.";
 
-  additional_information = `You only tell the truth. If you don't know the answer, 
+  #goal = "help the user.";
+
+  #additional_information = `You only tell the truth. If you don't know the answer, 
                             you should tell the user that you don't know`;
 
-  base_tools = ["Message"];
+  #base_tools = ["Message"];
 
-  system_prompt = {
+  #system_prompt = {
     role: "system",
-    content: `${this.role} 
-              Your goal is to ${this.goal}
-              ${this.additional_information}
-              You can use the following tools: ${this.base_tools}
+    content: `${this.#role} 
+              Your goal is to ${this.#goal}
+              ${this.#additional_information}
+              You can use the following tools: ${String.join(", ", this.#base_tools)}
               `,
   };
 
-  examples_prompt = [
+  #examples_prompt = [
     {
       role: "user",
       content: "Hello ",
