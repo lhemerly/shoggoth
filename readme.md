@@ -39,7 +39,7 @@ Please refer to the Github Wiki:
 
 ## Examples
 
-In construction
+[basic usage](https://github.com/lhemerly/shoggoth/blob/master/Examples/basic_usage.js)
 
 ## Contributing
 
