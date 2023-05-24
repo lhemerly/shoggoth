@@ -1,6 +1,9 @@
-const Tools = require("./tools");
+const Tools = require("./Tools/Tool");
 
 class Shoggoth {
+
+  verbose = true;
+
   tool_error = {
     role: "assistant",
     content: "Observation: No such tool exists.",
@@ -16,21 +19,25 @@ class Shoggoth {
     }
   }
 
-  sendConvo(mask, convo, model) {
-    let message = JSON.parse(model.send(mask, convo));
-    convo.history.push(message);
+  async sendConvo(mask, convo, model) {
+    let message = await model.send(mask, convo.convo);
+    message = JSON.parse(message);
+    convo.addMessage(message);
     if (message.tool === "Send_Message") {
       return message;
     }
     this.answerHook(mask, convo, message, model);
     message = this.parseMessage(message);
-    convo.history.push(message);
+    convo.history.push(JSON.stringify(message));
     convo.adjustConvo(model.tokenizer);
     this.sendConvo(mask, convo, model);
   }
 
   answerHook(mask, convo, message, model) {
-    console.log(mask + convo + message + model);
+    if (this.verbose){
+      console.log(mask + convo + message + model);
+    }
+    
   }
 }
 

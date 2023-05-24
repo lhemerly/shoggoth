@@ -17,6 +17,7 @@ class Mask {
     this.#base_tools = base_tools;
     this.#system_prompt = system_prompt;
     this.#examples_prompt = examples_prompt;
+    this.updateSystemPrompt();
   }
 
   #temperature = 0;
@@ -35,7 +36,7 @@ class Mask {
     content: `${this.#role} 
               Your goal is to ${this.#goal}
               ${this.#additional_information}
-              You can use the following tools: ${String.join(", ", this.#base_tools)}
+              You can use the following tools: ${this.#base_tools.join(", ")}
               `,
   };
 
@@ -55,6 +56,47 @@ class Mask {
       `,
     },
   ];
+
+  updateSystemPrompt() {
+    this.#system_prompt = {
+      role: "system",
+      content: `${this.#role} 
+                Your goal is to ${this.#goal}
+                ${this.#additional_information}
+                You can use the following tools: ${this.#base_tools.join(", ")}
+                `,
+    };
+  }
+
+  // Getters
+  get temperature() {
+    return this.#temperature;
+  }
+
+  get role() {
+    return this.#role;
+  }
+
+  get goal() {
+    return this.#goal;
+  }
+
+  get additional_information() {
+    return this.#additional_information;
+  }
+
+  get base_tools() {
+    return this.#base_tools;
+  }
+
+  get system_prompt() {
+    return this.#system_prompt;
+  }
+
+  get examples_prompt() {
+    return this.#examples_prompt;
+  }
+
 }
 
 module.exports = Mask;

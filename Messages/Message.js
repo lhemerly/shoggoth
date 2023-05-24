@@ -5,6 +5,23 @@ class Message {
   }
   #role = "";
   #content = "";
+
+  get role() {
+    return this.#role;
+  }
+
+  get content() {
+    return this.#content;
+  }
+
+  set role(role_) {
+    this.#role = role_;
+  }
+
+  set content(content_) {
+    this.#content = content_;
+  }
+  
 }
 
-module.export = Message;
+module.exports = Message;

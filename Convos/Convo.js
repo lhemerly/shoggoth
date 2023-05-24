@@ -2,11 +2,9 @@ class Convo {
 
   constructor(
     history_ = new Array(),
-    convo_ = new Array(),
     max_input_tokens_ = 0
   ) {
     this.#history = history_;
-    this.#convo = convo_;
     this.#max_input_tokens = max_input_tokens_;
   }
 
@@ -33,15 +31,16 @@ class Convo {
     this.#convo.push(this.#history[0]);
     let token_count = 0;
     let i = this.#history.length - 1;
-    while (i >= 0 && token_count < this.#max_input_tokens) {
-      let tokens = tokenizer.encode(this.getText(this.#history[i]));
+    while (i > 0 && token_count < this.#max_input_tokens) {
+      let tokens = tokenizer(this.getText(this.#history[i]));
       token_count += tokens.length;
       if (token_count > this.#max_input_tokens) {
         break;
       }
-      this.#convo.push(this.#history[i]);
+      this.#convo.splice(-1,0,this.#history[i]);
       i--;
     }
+    this.#convo.reverse();
   }
 
   /**
@@ -58,7 +57,7 @@ class Convo {
    *  
    * @returns {Array}
    */
-  getConvo() {
+  get convo() {
     return this.#convo;
   }
   
@@ -67,7 +66,7 @@ class Convo {
    *  
    * @returns {Array} 
    */
-  getHistory() {
+  get history() {
     return this.#history;
   }
 
@@ -76,7 +75,7 @@ class Convo {
    *  
    * @returns {Number}
   */
-  getMaxInputTokens() {
+  get max_input_tokens() {
     return this.#max_input_tokens;
   }
 
@@ -89,18 +88,18 @@ class Convo {
    * @throws {Error} if max_input_tokens is less than 0
    * @throws {Error} if max_input_tokens is not an integer
     */
-  setMaxInputTokens(max_input_tokens) {
-    if (typeof max_input_tokens !== "number") {
-      throw new Error("max_input_tokens must be a number");
+  set max_input_tokens(value) {
+    if (typeof value !== "number") {
+      throw new Error("value must be a number");
     }
-    if (max_input_tokens < 0) {
-      throw new Error("max_input_tokens must be greater than 0");
+    if (value < 0) {
+      throw new Error("value must be greater than 0");
     }
-    if (!Number.isInteger(max_input_tokens)) {
-      throw new Error("max_input_tokens must be an integer");
+    if (!Number.isInteger(value)) {
+      throw new Error("value must be an integer");
     }
-    this.#max_input_tokens = max_input_tokens;
+    this.#max_input_tokens = value;
   } 
 }
 
-module.export = Convo;
+module.exports = Convo;

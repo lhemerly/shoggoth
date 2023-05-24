@@ -3,7 +3,13 @@ const axios = require("axios");
 class Model {
   
   // Constructor
-  constructor(name, apiKey, max_tokens, tokenizer, model_api_endpoint) {
+  constructor(
+    name = this.#name, 
+    apiKey = this.#apiKey, 
+    max_tokens = this.#max_tokens, 
+    tokenizer = this.#tokenizer, 
+    model_api_endpoint = this.#model_api_endpoint
+    ) {
     this.#name = name;
     this.#apiKey = apiKey;
     this.#max_tokens = max_tokens;
@@ -16,10 +22,6 @@ class Model {
   #apiKey = "";
   #max_tokens = 0;
   #tokenizer = "";
-  #headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${this.apiKey}`,
-  };
   #model_api_endpoint = "";
 
   // Interfaces
@@ -30,8 +32,14 @@ class Model {
       temperature: mask.temperature,
     };
 
+    const header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.#apiKey}`,
+    }}
+
     const message = await axios
-      .post(this.#model_api_endpoint, data, this.#headers)
+      .post(this.#model_api_endpoint, data, header)
       .then((response) => response.data.choices[0].message.content)
       .catch((error) => {
         console.error(error);
@@ -58,10 +66,6 @@ class Model {
     return this.#tokenizer;
   }
 
-  get headers() {
-    return this.#headers;
-  }
-
   get model_api_endpoint() {
     return this.#model_api_endpoint;
   }
@@ -81,10 +85,6 @@ class Model {
 
   set tokenizer(tokenizer) {
     this.#tokenizer = tokenizer;
-  }
-
-  set headers(headers) {
-    this.#headers = headers;
   }
 
   set model_api_endpoint(model_api_endpoint) {
