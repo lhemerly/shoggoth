@@ -33,20 +33,6 @@ npm install shoggoth
 
 Shoggoth provides the base objects for a simple implementation. You should extend the base classes to customize the shoggoth to your needs.
 
-Below is a simple example using the built-in classes:
-
-```js
-const { Mask, Convo, GPT3_5, Shoggoth } = require("shoggoth");
-
-Convo.convo.push("What is a shoggoth?");
-
-let answer = Shoggoth.sendConvo(Mask, Convo, Model);
-
-console.log(answer);
-```
-
-## API Documentation
-
 Please refer to the Github Wiki:
 
 [shoggoth docs](https://github.com/lhemerly/shoggoth/wiki)
