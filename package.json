@@ -1,6 +1,6 @@
 {
   "name": "shoggoth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A package to manage AI powered backends with a multitude of agents, tools and models",
   "main": "index.js",
   "scripts": {
