@@ -16,7 +16,7 @@ A powerful npm package for managing AI-powered backends, featuring a multitude o
 
 - 👺 Masks -> Create a multitude of personas for your LLM, call and manage each at will.
 - 🔧 Tools -> Default tool integration. Create your own custom tools and let the shoggoth sort it's
-uses and outputs
+  uses and outputs
 - 🧠 Models -> Configure different models to use on your backend, calling the right model for each job.
 - 💬 Convos -> Manage the conversations history, keeping the token count inside the limits of the model API.
 - 🦑 Shoggoth -> Manage all the masks, tools, models and convos. Provides a simple interface to send messages, parse answers and activate tools. Provide hooks for interactions in your backend.
@@ -36,9 +36,9 @@ Shoggoth provides the base objects for a simple implementation. You should exten
 Below is a simple example using the built-in classes:
 
 ```js
-const { Mask, Convo, GPT3_5, Shoggoth } = require('shoggoth');
+const { Mask, Convo, GPT3_5, Shoggoth } = require("shoggoth");
 
-Convo.convo.push('What is a shoggoth?');
+Convo.convo.push("What is a shoggoth?");
 
 let answer = Shoggoth.sendConvo(Mask, Convo, Model);
 

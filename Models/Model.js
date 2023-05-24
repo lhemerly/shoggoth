@@ -1,15 +1,14 @@
 const axios = require("axios");
 
 class Model {
-  
   // Constructor
   constructor(
-    name = this.#name, 
-    apiKey = this.#apiKey, 
-    max_tokens = this.#max_tokens, 
-    tokenizer = this.#tokenizer, 
+    name = this.#name,
+    apiKey = this.#apiKey,
+    max_tokens = this.#max_tokens,
+    tokenizer = this.#tokenizer,
     model_api_endpoint = this.#model_api_endpoint
-    ) {
+  ) {
     this.#name = name;
     this.#apiKey = apiKey;
     this.#max_tokens = max_tokens;
@@ -36,7 +35,8 @@ class Model {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.#apiKey}`,
-    }}
+      },
+    };
 
     const message = await axios
       .post(this.#model_api_endpoint, data, header)
@@ -90,7 +90,6 @@ class Model {
   set model_api_endpoint(model_api_endpoint) {
     this.#model_api_endpoint = model_api_endpoint;
   }
-  
 }
 
 module.exports = Model;

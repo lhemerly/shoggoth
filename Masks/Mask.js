@@ -1,5 +1,4 @@
 class Mask {
-  
   // Constructor
   constructor(
     temperature = this.#temperature,
@@ -96,7 +95,6 @@ class Mask {
   get examples_prompt() {
     return this.#examples_prompt;
   }
-
 }
 
 module.exports = Mask;

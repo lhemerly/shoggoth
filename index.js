@@ -1,7 +1,6 @@
 const Tools = require("./Tools/Tool");
 
 class Shoggoth {
-
   verbose = true;
 
   tool_error = {
@@ -34,10 +33,9 @@ class Shoggoth {
   }
 
   answerHook(mask, convo, message, model) {
-    if (this.verbose){
+    if (this.verbose) {
       console.log(mask + convo + message + model);
     }
-    
   }
 }
 

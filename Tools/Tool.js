@@ -1,7 +1,6 @@
 const Message = require("../Messages/Message");
 
 class Tool {
-
   // Constructor
   constructor(name, description, use_function) {
     this.#name = name;

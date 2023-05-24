@@ -21,7 +21,6 @@ class Message {
   set content(content_) {
     this.#content = content_;
   }
-  
 }
 
 module.exports = Message;

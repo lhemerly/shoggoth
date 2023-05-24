@@ -1,9 +1,9 @@
 const Model = require("./Model");
-const {encode, decode} = require("gpt-3-encoder")
+//eslint-disable-next-line
+const { encode, decode } = require("gpt-3-encoder");
 
 class GPT3_5 extends Model {
-  
-  constructor(){
+  constructor() {
     super();
     this.name = "gpt-3.5-turbo";
     this.tokenizer = encode;
