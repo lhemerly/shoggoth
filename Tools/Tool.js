@@ -1,15 +1,10 @@
 const Message = require("../Messages/Message");
 
 class Tool {
-  // Constructor
-  constructor(name, description, use_function) {
-    this.#name = name;
-    this.#description = description;
-    this.use = use_function;
+  constructor(name, description) {
+    this.name = name;
+    this.description = description;
   }
-
-  #name = "";
-  #description = "";
 
   use(input) {
     let output = new Message("Assistant", "Observation: " + input);

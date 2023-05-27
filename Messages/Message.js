@@ -1,10 +1,11 @@
 class Message {
-  constructor(role_, content_) {
-    this.#role = role_;
-    this.#content = content_;
-  }
   #role = "";
   #content = "";
+
+  constructor(role, content) {
+    this.#role = role;
+    this.#content = content;
+  }
 
   get role() {
     return this.#role;
@@ -14,12 +15,12 @@ class Message {
     return this.#content;
   }
 
-  set role(role_) {
-    this.#role = role_;
+  set role(role) {
+    this.#role = role;
   }
 
-  set content(content_) {
-    this.#content = content_;
+  set content(content) {
+    this.#content = content;
   }
 }
 

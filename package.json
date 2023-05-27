@@ -18,7 +18,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
-    "gpt-3-encoder": "^1.1.4"
+    "cheerio": "^1.0.0-rc.12",
+    "gpt-3-encoder": "^1.1.4",
+    "neo4j-driver": "^5.9.0"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
