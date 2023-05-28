@@ -1,11 +1,10 @@
 const axios = require("axios");
-const Message = require("../Messages/Message");
 const Tool = require("./Tool");
 
 class SearchWebTool extends Tool {
   constructor(apiKey, cx) {
     super(
-      "SearchWebTool",
+      "SearchWeb",
       "This tool can execute a web search when provided a query string. It returns the parsed results of the search."
     );
     this.apiKey = apiKey;
@@ -15,7 +14,7 @@ class SearchWebTool extends Tool {
   async use(query) {
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/customsearch/v1`,
+        `https://customsearch.googleapis.com/customsearch/v1`,
         {
           params: {
             q: query,
@@ -35,13 +34,16 @@ class SearchWebTool extends Tool {
         description: item.snippet,
       }));
 
-      return new Message(
-        "Assistant",
-        "Observation: Successfully executed the web search. The results are: " +
-          JSON.stringify(results)
-      );
+      return {
+        role: "assistant",
+        content: "Observation: " + JSON.stringify(results),
+      };
     } catch (error) {
-      return new Message("Assistant", "Observation: Error - " + error);
+      console.log(error);
+      return {
+        role: "assistant",
+        content: "Observation: Error - " + error,
+      };
     }
   }
 }

@@ -1,26 +1,25 @@
 const { spawnSync } = require("child_process");
-const Message = require("../Messages/Message");
 const Tool = require("./Tool");
 
 class CodeExecutionTool extends Tool {
   constructor() {
     super(
-      "CodeExecutionTool",
+      "CodeExecution",
       "This tool executes JavaScript code and returns the console output."
     );
   }
 
-  use(code) {
-    const executionResult = this.runCode(code);
+  async use(code) {
+    const executionResult = await this.runCode(code);
     const output = executionResult.stdout.toString().trim();
-    const message = new Message(
-      "Assistant",
-      `Observation: Code execution result: ${output}`
-    );
+    const message = {
+      role: "assistant",
+      content: `Observation: Code execution result: ${output}`,
+    };
     return message;
   }
 
-  runCode(code) {
+  async runCode(code) {
     const result = spawnSync("node", ["-e", code]);
     return result;
   }

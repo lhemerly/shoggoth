@@ -6,7 +6,7 @@ class GraphDatabaseTool extends Tool {
   // Constructor
   constructor(uri, user, password) {
     super(
-      "GraphDatabaseTool",
+      "GraphDatabase",
       "This tool can add nodes and connectors to a graph database when provided an input object with 'nodes' and 'connectors' arrays. 'nodes' is an array of node names and 'connectors' is an array of objects, each with a 'node1' and 'node2' that represents a connection between two nodes."
     );
     this.driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
@@ -32,12 +32,16 @@ class GraphDatabaseTool extends Tool {
         console.log(result);
       }
 
-      return new Message(
-        "Assistant",
-        "Observation: Successfully added nodes and connectors to the graph database."
-      );
+      return {
+        role: "assistant",
+        content:
+          "Observation: Successfully added nodes and connectors to the graph database.",
+      };
     } catch (error) {
-      return new Message("Assistant", "Observation: Error - " + error);
+      return {
+        role: "assistant",
+        content: "Observation: Error - " + error,
+      };
     } finally {
       await session.close();
     }

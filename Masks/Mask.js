@@ -5,7 +5,7 @@ class Mask {
   #additional_information =
     "You only tell the truth. If you don't know the answer, you should tell the user that you don't know";
   #base_tools = [
-    { name: "Send_Message", description: "Send a message to the user." },
+    { name: "SendMessage", description: "Send a message to the user." },
   ];
   #system_prompt;
   #examples_prompt;
@@ -35,8 +35,8 @@ class Mask {
       role: "system",
       content: `${this.#role}
 Your goal is to ${this.#goal}
-${this.#additional_information}
 You can use the following tools: ${toolList}
+${this.#additional_information}
 `,
     };
   }
@@ -45,17 +45,17 @@ You can use the following tools: ${toolList}
     this.#examples_prompt = [
       {
         role: "user",
-        content: "Hello ",
+        content: "Hello",
       },
       {
         role: "assistant",
         content: `
-{
-  "thoughts": "I should say hello and ask what the user wants.",
-  "tool": "Send_Message",
-  "tool_input": "Hello, how can I help you?"
-}
-`,
+        {
+          "thoughts": "I should say hello and ask what the user wants.",
+          "tool": "SendMessage",
+          "tool_input": "Hello, how are you today?"
+        }
+        `,
       },
     ];
   }

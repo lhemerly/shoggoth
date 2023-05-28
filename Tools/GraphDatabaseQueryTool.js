@@ -6,7 +6,7 @@ class GraphDatabaseQueryTool extends Tool {
   // Constructor
   constructor(uri, user, password) {
     super(
-      "GraphDatabaseQueryTool",
+      "GraphDatabaseQuery",
       "This tool can execute a query on a graph database when provided a query string. It returns the results of the query."
     );
     this.driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
@@ -18,13 +18,17 @@ class GraphDatabaseQueryTool extends Tool {
       let result = await session.run(query);
       let records = result.records.map((record) => record.toObject());
 
-      return new Message(
-        "Assistant",
-        "Observation: Successfully executed the query. The results are: " +
-          JSON.stringify(records)
-      );
+      return {
+        role: "assistant",
+        content:
+          "Observation: Successfully executed the query. The results are: " +
+          JSON.stringify(records),
+      };
     } catch (error) {
-      return new Message("Assistant", "Observation: Error - " + error);
+      return {
+        role: "assistant",
+        content: "Observation: Error - " + error,
+      };
     } finally {
       await session.close();
     }

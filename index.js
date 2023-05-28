@@ -16,7 +16,8 @@ class Shoggoth {
   }
 
   parseMessage(message) {
-    const tool = this.tools[message.tool];
+    const toolName = message.tool;
+    const tool = this.tools.find((tool) => tool.name === toolName);
     if (tool) {
       return tool.use(message.tool_input);
     } else {
@@ -28,18 +29,22 @@ class Shoggoth {
     let message = await this.model.send(this.mask, convo.convo);
     console.log(message);
     message = JSON.parse(message);
-    convo.addMessage(message);
-    if (message.tool === "Send_Message") {
+    convo.addMessage({
+      role: "assistant",
+      content: JSON.stringify(message),
+    });
+    if (message.tool === "SendMessage") {
       return message;
     }
     this.answerHook(this.mask, convo, message, this.model);
-    message = this.parseMessage(message);
+    message = await this.parseMessage(message);
     if (encode(message.content).length > this.model.max_tokens) {
       message.content = this.summarizeText(message.content);
     }
     console.log(message);
-    convo.history.push(JSON.stringify(message));
+    convo.addMessage(message);
     convo.adjustConvo(this.model.tokenizer);
+    console.log(convo.convo);
     this.sendConvo(convo);
   }
 

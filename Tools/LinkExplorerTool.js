@@ -6,7 +6,7 @@ const Tool = require("./Tool");
 class LinkExplorerTool extends Tool {
   constructor(maxTokenLimit) {
     super(
-      "LinkExplorerTool",
+      "LinkExplorer",
       "This tool can extract the content and links of a webpage when provided a URL. It returns the summarized content and links of the webpage."
     );
     this.maxTokenLimit = maxTokenLimit;
@@ -37,15 +37,19 @@ class LinkExplorerTool extends Tool {
         }
       });
 
-      return new Message(
-        "Assistant",
-        "Observation: Successfully extracted the content and links of the webpage. The summarized content is: " +
+      return {
+        role: "assistant",
+        content:
+          "Observation: Successfully extracted the content and links of the webpage. The summarized content is: " +
           bodyText +
           " and the links are: " +
-          JSON.stringify(links)
-      );
+          JSON.stringify(links),
+      };
     } catch (error) {
-      return new Message("Assistant", "Observation: Error - " + error);
+      return {
+        role: "assistant",
+        content: "Observation: Error - " + error,
+      };
     }
   }
 }
