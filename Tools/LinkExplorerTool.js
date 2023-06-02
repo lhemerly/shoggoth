@@ -1,6 +1,5 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const Message = require("../Messages/Message");
 const Tool = require("./Tool");
 
 class LinkExplorerTool extends Tool {
@@ -40,7 +39,7 @@ class LinkExplorerTool extends Tool {
       return {
         role: "assistant",
         content:
-          "Observation: Successfully extracted the content and links of the webpage. The summarized content is: " +
+          "Observation: The content is: " +
           bodyText +
           " and the links are: " +
           JSON.stringify(links),

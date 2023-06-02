@@ -15,19 +15,31 @@ class Shoggoth {
     this.model = null;
   }
 
-  parseMessage(message) {
+  async parseMessage(message) {
     const toolName = message.tool;
     const tool = this.tools.find((tool) => tool.name === toolName);
     if (tool) {
-      return tool.use(message.tool_input);
+      return await tool.use(message.tool_input);
     } else {
       return this.tool_error;
     }
   }
 
+  // Method to return a JSON inside a string. It should consider the biggest JSON possible.
+  findJSON(message) {
+    let json = "";
+    let jsonStart = message.indexOf("{");
+    let jsonEnd = message.lastIndexOf("}");
+    if (jsonStart !== -1 && jsonEnd !== -1) {
+      json = message.substring(jsonStart, jsonEnd + 1);
+    }
+    return json;
+  }
+
   async sendConvo(convo) {
     let message = await this.model.send(this.mask, convo.convo);
     console.log(message);
+    message = this.findJSON(message);
     message = JSON.parse(message);
     convo.addMessage({
       role: "assistant",
@@ -39,7 +51,7 @@ class Shoggoth {
     this.answerHook(this.mask, convo, message, this.model);
     message = await this.parseMessage(message);
     if (encode(message.content).length > this.model.max_tokens) {
-      message.content = this.summarizeText(message.content);
+      message.content = await this.summarizeText(message.content);
     }
     console.log(message);
     convo.addMessage(message);
@@ -65,10 +77,9 @@ class Shoggoth {
     this.mask = summarizationMask;
 
     let summary = text;
-    while (encode(summary).length > this.model.max_tokens) {
+    while (encode(summary).length > convo.max_input_tokens) {
       const response = await this.sendConvo(convo);
       summary = response.content;
-      userMessage.text = summary;
     }
 
     this.mask = original_mask;

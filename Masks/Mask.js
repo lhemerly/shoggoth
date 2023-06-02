@@ -53,7 +53,7 @@ ${this.#additional_information}
         {
           "thoughts": "I should say hello and ask what the user wants.",
           "tool": "SendMessage",
-          "tool_input": "Hello, how are you today?"
+          "tool_input": "Hello, how can I help you today?"
         }
         `,
       },

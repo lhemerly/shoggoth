@@ -6,7 +6,7 @@ class Summarizator extends Mask {
     this.#role = "You are a summarization AI assistant.";
     this.#goal = "summarize large amounts of text for the user.";
     this.#additional_information = ``;
-    this.#base_tools = ["Message", "LinkExplorerTool"];
+    this.#base_tools = ["SendMessage"];
     this.updateSystemPrompt();
   }
 
