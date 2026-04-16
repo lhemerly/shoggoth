@@ -7,7 +7,7 @@ class Model {
     apiKey = this.#apiKey,
     max_tokens = this.#max_tokens,
     tokenizer = this.#tokenizer,
-    model_api_endpoint = this.#model_api_endpoint
+    model_api_endpoint = this.#model_api_endpoint,
   ) {
     this.#name = name;
     this.#apiKey = apiKey;
