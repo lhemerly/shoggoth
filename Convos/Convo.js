@@ -11,8 +11,12 @@ class Convo {
   // Function to return an input array as text
   getText(message_list) {
     let text = "";
-    for (const message of message_list) {
-      text += message.text + "/n ";
+    if (Array.isArray(message_list)) {
+      for (const message of message_list) {
+        text += (message.text || message.content || "") + "/n ";
+      }
+    } else {
+      text += (message_list.text || message_list.content || "") + "/n ";
     }
     return text;
   }
