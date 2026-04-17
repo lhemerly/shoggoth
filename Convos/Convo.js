@@ -10,6 +10,9 @@ class Convo {
 
   // Function to return an input array as text
   getText(message_list) {
+    if (!Array.isArray(message_list)) {
+      return message_list.text + "/n ";
+    }
     return message_list.map((message) => message.text + "/n ").join("");
   }
 
