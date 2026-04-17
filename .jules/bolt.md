@@ -1,0 +1,3 @@
+## 2024-05-19 - Array operations in tight loops
+**Learning:** `Array.prototype.splice` inside a while loop for unshifting or inserting elements is an O(N) operation per iteration causing an overall O(N^2) complexity in building history queues like `adjustConvo` in `Convos/Convo.js`.
+**Action:** Replace `splice(-1, 0, element)` and `reverse()` combinations with a temporary array push + reversed iterate-and-push into the final array for significant speedup without breaking order. Also use `for...of` loops over standard `for (let i = 0...` when simple iteration without index logic is required, as it benchmarks slightly faster in V8 for string concatenation operations.

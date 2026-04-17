@@ -11,8 +11,8 @@ class Convo {
   // Function to return an input array as text
   getText(message_list) {
     let text = "";
-    for (let i = 0; i < message_list.length; i++) {
-      text += message_list[i].text + "/n ";
+    for (const message of message_list) {
+      text += message.text + "/n ";
     }
     return text;
   }
@@ -27,16 +27,21 @@ class Convo {
     this.#convo.push(this.#history[0]);
     let token_count = 0;
     let i = this.#history.length - 1;
+    let temp = [];
     while (i > 0 && token_count < this.#max_input_tokens) {
       let tokens = tokenizer(this.getText(this.#history[i]));
       token_count += tokens.length;
       if (token_count > this.#max_input_tokens) {
         break;
       }
-      this.#convo.splice(-1, 0, this.#history[i]);
+      // Push newest messages into a temporary array to avoid expensive splices
+      temp.push(this.#history[i]);
       i--;
     }
-    this.#convo.reverse();
+    // Append the older messages from the temp array to #convo in reverse order
+    for (let j = temp.length - 1; j >= 0; j--) {
+      this.#convo.push(temp[j]);
+    }
   }
 
   /**
