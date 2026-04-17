@@ -23,11 +23,6 @@ class Convo {
    * #max_input_tokens.
    */
   adjustConvo(tokenizer) {
-    if (this.#history.length === 0) {
-      this.#convo = [];
-      return;
-    }
-
     let token_count = 0;
     let i = this.#history.length - 1;
 
@@ -44,7 +39,9 @@ class Convo {
     }
 
     this.#convo = new Array();
-    this.#convo.push(this.#history[0]);
+    if (this.#history.length > 0) {
+      this.#convo.push(this.#history[0]);
+    }
     for (let j = i + 1; j < this.#history.length; j++) {
       this.#convo.push(this.#history[j]);
     }
