@@ -8,6 +8,9 @@ class Convo {
   #convo = new Array();
   #max_input_tokens = 0;
 
+  // Cache to store message token lengths to prevent expensive re-tokenization
+  #tokenCache = new Map();
+
   // Function to return an input array as text
   getText(message_list) {
     let text = "";
@@ -21,6 +24,11 @@ class Convo {
    * Function to make #convo the 0 element of #history plus n elements
    * starting from the last one until the total token count is less than
    * #max_input_tokens.
+   *
+   * ⚡ Optimization: Token generation (especially with gpt-3-encoder) is a
+   * synchronous, CPU-intensive operation. We now cache the calculated token lengths
+   * using a Map. This turns an O(n) tokenization cost per message add into an
+   * O(1) cache lookup, drastically improving performance for long conversations.
    */
   adjustConvo(tokenizer) {
     this.#convo = new Array();
@@ -28,12 +36,21 @@ class Convo {
     let token_count = 0;
     let i = this.#history.length - 1;
     while (i > 0 && token_count < this.#max_input_tokens) {
-      let tokens = tokenizer(this.getText(this.#history[i]));
-      token_count += tokens.length;
+      let message = this.#history[i];
+      let msgLength = this.#tokenCache.get(message);
+
+      // Compute and cache token length if not already present
+      if (msgLength === undefined) {
+        let tokens = tokenizer(this.getText(message));
+        msgLength = tokens.length;
+        this.#tokenCache.set(message, msgLength);
+      }
+
+      token_count += msgLength;
       if (token_count > this.#max_input_tokens) {
         break;
       }
-      this.#convo.splice(-1, 0, this.#history[i]);
+      this.#convo.splice(-1, 0, message);
       i--;
     }
     this.#convo.reverse();
