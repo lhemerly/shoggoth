@@ -1,10 +1,12 @@
 const Tool = require("./Tool");
 
 class Send_Message extends Tool {
-  #name = "Send Message";
-  #description = "Send a message to the user.";
+  constructor() {
+    super("Send Message", "Send a message to the user.");
+  }
+
   //eslint-disable-next-line
-  #use_function = (input) => {
+  use = (input) => {
     return;
   };
 }
