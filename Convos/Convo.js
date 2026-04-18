@@ -23,20 +23,28 @@ class Convo {
    * #max_input_tokens.
    */
   adjustConvo(tokenizer) {
-    this.#convo = new Array();
-    this.#convo.push(this.#history[0]);
     let token_count = 0;
     let i = this.#history.length - 1;
+
+    // Performance optimization: Find the starting index first to avoid inefficient array splicing
+    // By determining how many historical messages fit in the token limit, we can then push them
+    // sequentially in a subsequent loop, which avoids O(n^2) behavior from repeated splices.
     while (i > 0 && token_count < this.#max_input_tokens) {
       let tokens = tokenizer(this.getText(this.#history[i]));
       token_count += tokens.length;
       if (token_count > this.#max_input_tokens) {
         break;
       }
-      this.#convo.splice(-1, 0, this.#history[i]);
       i--;
     }
-    this.#convo.reverse();
+
+    this.#convo = new Array();
+    if (this.#history.length > 0) {
+      this.#convo.push(this.#history[0]);
+    }
+    for (let j = i + 1; j < this.#history.length; j++) {
+      this.#convo.push(this.#history[j]);
+    }
   }
 
   /**
