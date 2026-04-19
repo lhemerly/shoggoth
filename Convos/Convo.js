@@ -7,6 +7,10 @@ class Convo {
   #history = new Array();
   #convo = new Array();
   #max_input_tokens = 0;
+  // Performance optimization: Cache token counts for messages to avoid O(n) re-tokenizations
+  // on every adjustConvo call, turning it into O(1) cache lookups. Using Map instead of WeakMap
+  // because messages can be primitives (strings) or objects.
+  #tokenCache = new Map();
 
   // Function to return an input array as text
   getText(message_list) {
@@ -29,8 +33,19 @@ class Convo {
     // By determining how many historical messages fit in the token limit, we can then push them
     // sequentially in a subsequent loop, which avoids O(n^2) behavior from repeated splices.
     while (i > 0 && token_count < this.#max_input_tokens) {
-      let tokens = tokenizer(this.getText(this.#history[i]));
-      token_count += tokens.length;
+      let msg = this.#history[i];
+      let msgTokensLength;
+
+      // Performance optimization: Check cache to avoid expensive re-tokenization
+      if (this.#tokenCache.has(msg)) {
+        msgTokensLength = this.#tokenCache.get(msg);
+      } else {
+        let tokens = tokenizer(this.getText(msg));
+        msgTokensLength = tokens.length;
+        this.#tokenCache.set(msg, msgTokensLength);
+      }
+
+      token_count += msgTokensLength;
       if (token_count > this.#max_input_tokens) {
         break;
       }
