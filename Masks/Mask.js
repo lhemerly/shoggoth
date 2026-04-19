@@ -7,7 +7,7 @@ class Mask {
     additional_information = this.#additional_information,
     base_tools = this.#base_tools,
     system_prompt = this.#system_prompt,
-    examples_prompt = this.#examples_prompt,
+    examples_prompt = this.#examples_prompt
   ) {
     this.#temperature = temperature;
     this.#role = role;

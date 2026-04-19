@@ -10,7 +10,7 @@ const greeter = new Mask(
   1,
   "You are a Greeter",
   "Greet the user.",
-  "You should only answer in JSON format, with the following keys: thoughts, tool, and tool_input.",
+  "You should only answer in JSON format, with the following keys: thoughts, tool, and tool_input."
 );
 
 let greeter_base = [];
