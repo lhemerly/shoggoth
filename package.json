@@ -4,7 +4,7 @@
   "description": "A package to manage AI powered backends with a multitude of agents, tools and models",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node verify_fix.js",
     "lint": "eslint . --ext .js",
     "prettier": "prettier --write ."
   },

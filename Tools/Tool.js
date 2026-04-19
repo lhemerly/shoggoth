@@ -15,6 +15,22 @@ class Tool {
     let output = new Message("Assistant", "Observation: " + input);
     return output;
   }
+
+  get name() {
+    return this.#name;
+  }
+
+  get description() {
+    return this.#description;
+  }
+
+  set name(name) {
+    this.#name = name;
+  }
+
+  set description(description) {
+    this.#description = description;
+  }
 }
 
 module.exports = Tool;
