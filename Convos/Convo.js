@@ -35,15 +35,23 @@ class Convo {
     this.#convo.push(this.#history[0]);
     let token_count = 0;
     let i = this.#history.length - 1;
+
+    // Ensure nested map exists for the current tokenizer to prevent cross-model cache collisions
+    if (!this.#tokenCache.has(tokenizer)) {
+      this.#tokenCache.set(tokenizer, new Map());
+    }
+    let tokenizerCache = this.#tokenCache.get(tokenizer);
+
     while (i > 0 && token_count < this.#max_input_tokens) {
       let message = this.#history[i];
-      let msgLength = this.#tokenCache.get(message);
+      let messageText = this.getText(message);
+      let msgLength = tokenizerCache.get(messageText);
 
-      // Compute and cache token length if not already present
+      // Compute and cache token length based on actual text content to support mutations
       if (msgLength === undefined) {
-        let tokens = tokenizer(this.getText(message));
+        let tokens = tokenizer(messageText);
         msgLength = tokens.length;
-        this.#tokenCache.set(message, msgLength);
+        tokenizerCache.set(messageText, msgLength);
       }
 
       token_count += msgLength;
