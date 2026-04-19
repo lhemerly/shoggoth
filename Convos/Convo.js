@@ -11,6 +11,7 @@ class Convo {
   // on every adjustConvo call, turning it into O(1) cache lookups. Using Map instead of WeakMap
   // because messages can be primitives (strings) or objects.
   #tokenCache = new Map();
+  #lastTokenizer = null;
 
   // Function to return an input array as text
   getText(message_list) {
@@ -26,6 +27,11 @@ class Convo {
    * #max_input_tokens.
    */
   adjustConvo(tokenizer) {
+    if (this.#lastTokenizer !== tokenizer) {
+      this.#tokenCache.clear();
+      this.#lastTokenizer = tokenizer;
+    }
+
     let token_count = 0;
     let i = this.#history.length - 1;
 
