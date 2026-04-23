@@ -33,6 +33,8 @@ npm install shoggoth
 
 Shoggoth provides the base objects for a simple implementation. You should extend the base classes to customize the shoggoth to your needs.
 
+## API Documentation
+
 Please refer to the Github Wiki:
 
 [shoggoth docs](https://github.com/lhemerly/shoggoth/wiki)
