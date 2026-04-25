@@ -18,7 +18,14 @@ class Convo {
     if (!Array.isArray(message_list)) {
       return (message_list.text || message_list.content || "") + "/n ";
     }
-    return message_list.map((message) => (message.text || message.content || "") + "/n ").join("");
+    // Performance optimization: Using a for...of loop with string concatenation (+=)
+    // avoids intermediate array allocations created by .map().join(''), reducing garbage
+    // collection pressure and providing a speedup for large message arrays.
+    let text = "";
+    for (const message of message_list) {
+      text += (message.text || message.content || "") + "/n ";
+    }
+    return text;
   }
 
   /**
